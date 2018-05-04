@@ -4,10 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class EditActivity extends AppCompatActivity {
+public class EditActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText edit;
     private Button button;
@@ -23,11 +24,13 @@ public class EditActivity extends AppCompatActivity {
         Log.d("Happy", "EditActivity onCreate");
 
         Intent intent = getIntent();
-        String userName = intent.getStringExtra("NAME");
+        String userName = intent.getStringExtra();
 
         if(userName != null){
             edit.setText(userName);
         }
+
+        button.setOnClickListener(this);
     }
 
     @Override
@@ -64,5 +67,14 @@ public class EditActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d("happy", "EditActivity onDestroy");
+    }
+
+    @Override
+    public void onClick(View view) {
+        String name = edit.getText().toString();
+        Intent intent = new Intent();
+        intent.putExtra("NAME",name);
+        setResult(RESULT_OK, intent);
+        onBackPressed();
     }
 }

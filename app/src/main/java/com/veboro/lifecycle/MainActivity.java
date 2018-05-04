@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String NAME ="NAME";
 
     //test
 
@@ -57,6 +60,19 @@ public class MainActivity extends AppCompatActivity {
     public void startEdit(View view) {
         Intent intent = new Intent(this, EditActivity.class);
         intent.putExtra("NAME","Dima");
-        startActivity(intent);
+        startActivityForResult(intent, 444);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==444){
+            //
+            String name = data.getStringExtra(NAME);
+            if(name !=null){
+                Toast.makeText(this,"Name: "+name, Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
